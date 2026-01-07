@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 API = "http://127.0.0.1:8000"
 
 st.set_page_config(page_title="Expense Tracker", layout="wide")
-st.title("💸 Smart Expense Tracker + Insights")
+st.title("Smart Expense Tracker + Insights")
 
 # nicer default plotting style
 plt.style.use("ggplot")
@@ -33,7 +33,7 @@ with st.sidebar:
         payload = {"date": str(date), "description": desc, "amount": float(amount)}
         r = api_post("/transactions", payload)
         if r.status_code == 200:
-            st.success(f"Added ✅ (Category: {r.json().get('category')})")
+            st.success(f"Added (Category: {r.json().get('category')})")
             st.rerun()
         else:
             st.error(r.text)
@@ -50,7 +50,7 @@ if has_data:
 
 # --- Empty state (NO st.stop) ---
 if not has_data:
-    st.info("👈 Add your first transaction using the sidebar to get started.")
+    st.info("Add your first transaction using the sidebar to get started.")
     st.caption("Once you add transactions, you’ll see charts, trends, projections, and delete controls here.")
     st.stop()
 
@@ -97,7 +97,7 @@ selected_id = st.selectbox(
     format_func=lambda i: f"ID {i} — {clean_df.loc[clean_df['id']==i, 'description'].values[0]} ({clean_df.loc[clean_df['id']==i, 'amount'].values[0]})"
 )
 
-if st.button("🗑️ Delete selected"):
+if st.button("Delete selected"):
     r = api_delete(f"/transactions/{int(selected_id)}")
     if r.status_code == 200:
         st.success(f"Deleted ID {selected_id}")
@@ -139,3 +139,4 @@ with right:
         st.pyplot(fig2)
     else:
         st.info("No expenses yet.")
+
